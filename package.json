@@ -2,10 +2,10 @@
     "name": "modelproxy-engine-mockjs",
     "version": "0.0.1",
     "description": "modelproxy的engine；用于产生mock数据。",
-    "main": "index.js",
+    "main": "dist/index.js",
     "scripts": {
         "test": "node test",
-        "build": "tsc src/index.ts typings/globals/node/index.d.ts typings/modules/modelproxy/index.d.ts typings/index.d.ts typings/mockjs.d.ts typings/modules/bluebird/index.d.ts typings/modules/lodash/index.d.ts typings/modules/tv4/index.d.ts --sourcemap --emitDecoratorMetadata --removeComments --preserveConstEnums --experimentalDecorators --moduleResolution node --lib es5,es2016 --typeRoots 'typings/index.d.ts' --target ES5 --module commonjs  --outDir built/node/"
+        "build": "tsc "
     },
     "bugs": {
         "url": "https://github.com/nick121212/modelproxy-engine-mockjs/issues"
@@ -22,6 +22,6 @@
     "dependencies": {
         "lodash": "^4.17.4",
         "mockjs": "^1.0.1-beta3",
-        "modelproxy": "^0.0.8"
+        "modelproxy": "^0.2.0"
     }
 }

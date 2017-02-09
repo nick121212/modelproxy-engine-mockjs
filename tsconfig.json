@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "target": "es5",
-        "module": "commonjs",
+        "module": "umd",
         "moduleResolution": "node",
         "sourceMap": true,
         "preserveConstEnums": true,
@@ -10,12 +10,14 @@
         "removeComments": true,
         "noImplicitAny": false,
         "noLib": false,
+        "outDir": "dist",
         "lib": [
             "es5",
             "es2016"
         ],
         "typeRoots": [
-            "typings/index.d.ts"
+            "typings/index.d.ts",
+            "node_modules/modelproxy/modelproxy.d.ts"
         ]
     }
 }

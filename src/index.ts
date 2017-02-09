@@ -1,12 +1,11 @@
 import * as Mock from "mockjs";
-import modelProxy, { ModelProxy } from 'modelproxy';
+import { modelProxy, ModelProxy } from 'modelproxy';
 
-export class MockEngine implements ModelProxy.IEngine {
-    MockObj: any;
+export class MockEngine extends modelProxy.BaseEngine implements ModelProxy.IEngine {
     mockEngine: ModelProxy.IEngine;
 
     constructor(mockEngine?: ModelProxy.IEngine) {
-        this.MockObj = Mock;
+        super();
         this.mockEngine = mockEngine;
     }
 
@@ -14,25 +13,16 @@ export class MockEngine implements ModelProxy.IEngine {
         return true;
     }
 
-    async proxy(intance: ModelProxy.IInterfaceModel, data: any, params: any) {
-        let path = `${intance.mockDir}/${intance.ns}/${intance.path}.js`.replace(/\/\//ig, "/");
-        let mockInfo;
-
+    async proxy(instance: ModelProxy.IInterfaceModel, options: ModelProxy.IProxyCtx) {
         if (!this.mockEngine) {
             throw new Error("没有设置mock的默认引擎！");
         }
-
-        mockInfo = await this.mockEngine.proxy({
-            path: path,
-            key: "mock" + intance.key,
-            method: modelProxy.methods.GET,
-            title: ""
-        }, null, null);
+        let mockInfo = await this.mockEngine.proxy(instance, options);
 
         return {
             req: {
-                data: data,
-                params: params
+                data: options.data,
+                params: options.params
             },
             mockData: Mock.mock(mockInfo)
         };

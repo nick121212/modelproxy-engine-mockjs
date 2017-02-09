@@ -1,4 +1,8 @@
-"use strict";
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -34,46 +38,53 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var Mock = require("mockjs");
-var modelproxy_1 = require("modelproxy");
-var MockEngine = (function () {
-    function MockEngine(mockEngine) {
-        this.MockObj = Mock;
-        this.mockEngine = mockEngine;
+(function (factory) {
+    if (typeof module === "object" && typeof module.exports === "object") {
+        var v = factory(require, exports);
+        if (v !== undefined) module.exports = v;
     }
-    MockEngine.prototype.validate = function (data) {
-        return true;
-    };
-    MockEngine.prototype.proxy = function (intance, data, params) {
-        return __awaiter(this, void 0, void 0, function () {
-            var path, mockInfo;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        path = (intance.mockDir + "/" + intance.ns + "/" + intance.path + ".js").replace(/\/\//ig, "/");
-                        if (!this.mockEngine) {
-                            throw new Error("没有设置mock的默认引擎！");
-                        }
-                        return [4 /*yield*/, this.mockEngine.proxy({
-                                path: path,
-                                key: "mock" + intance.key,
-                                method: modelproxy_1.default.methods.GET,
-                                title: ""
-                            }, null, null)];
-                    case 1:
-                        mockInfo = _a.sent();
-                        return [2 /*return*/, {
-                                req: {
-                                    data: data,
-                                    params: params
-                                },
-                                mockData: Mock.mock(mockInfo)
-                            }];
-                }
+    else if (typeof define === "function" && define.amd) {
+        define(["require", "exports", "mockjs", "modelproxy"], factory);
+    }
+})(function (require, exports) {
+    "use strict";
+    var Mock = require("mockjs");
+    var modelproxy_1 = require("modelproxy");
+    var MockEngine = (function (_super) {
+        __extends(MockEngine, _super);
+        function MockEngine(mockEngine) {
+            var _this = _super.call(this) || this;
+            _this.mockEngine = mockEngine;
+            return _this;
+        }
+        MockEngine.prototype.validate = function (data) {
+            return true;
+        };
+        MockEngine.prototype.proxy = function (instance, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                var mockInfo;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            if (!this.mockEngine) {
+                                throw new Error("没有设置mock的默认引擎！");
+                            }
+                            return [4 /*yield*/, this.mockEngine.proxy(instance, options)];
+                        case 1:
+                            mockInfo = _a.sent();
+                            return [2 /*return*/, {
+                                    req: {
+                                        data: options.data,
+                                        params: options.params
+                                    },
+                                    mockData: Mock.mock(mockInfo)
+                                }];
+                    }
+                });
             });
-        });
-    };
-    return MockEngine;
-}());
-exports.MockEngine = MockEngine;
+        };
+        return MockEngine;
+    }(modelproxy_1.modelProxy.BaseEngine));
+    exports.MockEngine = MockEngine;
+});
 //# sourceMappingURL=index.js.map

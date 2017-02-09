@@ -21,8 +21,8 @@ var config = {
     }]
 };
 
-var modelProxy = require("modelproxy").default;
-var MockjsEngine = require("../built/node/index.js").MockEngine;
+var modelProxy = require("modelproxy").modelProxy;
+var MockjsEngine = require("../dist").MockEngine;
 var path = require("path");
 
 function NodeEngine() {}
@@ -30,8 +30,8 @@ NodeEngine.prototype = {
     validate: function() {
         return true;
     },
-    proxy: function(intance) {
-        return require(intance.path);
+    proxy: function(instance) {
+        return require((instance.mockDir + "/" + instance.ns + "/" + instance.path + ".js").replace(/\/\//ig, "/"));
     }
 };
 
@@ -39,7 +39,7 @@ var engine = new MockjsEngine(new NodeEngine());
 
 modelProxy.engineFactory.add("mockjs", engine);
 
-var proxy = new modelProxy.ModelProxy();
+var proxy = new modelProxy.Proxy();
 
 proxy.loadConfig(config).then((result) => {
     return result.getNs("test");
@@ -47,7 +47,11 @@ proxy.loadConfig(config).then((result) => {
     if (!result) {
         return;
     }
-    return result.login({ usename: "1", password: "111111" }, {}, { engine: "mockjs", mockDir: path.resolve(__dirname, "./mocks/") });
+    return result.login({
+        data: { usename: "1", password: "111111" },
+        params: {},
+        instance: { engine: "mockjs", mockDir: path.resolve(__dirname, "./mocks/") }
+    });
 }).then((result) => {
     console.info(JSON.stringify(result));
 }).catch(console.error);
