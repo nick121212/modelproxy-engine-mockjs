@@ -152,9 +152,6 @@ var MockEngine = (function (_super) {
         _this.mockEngine = mockEngine;
         return _this;
     }
-    MockEngine.prototype.validate = function (instance, options) {
-        return true;
-    };
     MockEngine.prototype.proxy = function (instance, options) {
         return __awaiter(this, void 0, void 0, function () {
             var mockInfo;

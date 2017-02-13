@@ -3,16 +3,12 @@ import { modelProxy, ModelProxy } from 'modelproxy';
 import * as _ from "lodash";
 import * as serialize from "node-serialize";
 
-export class MockEngine extends modelProxy.BaseEngine implements ModelProxy.IEngine {
+export class MockEngine extends modelProxy.BaseEngine {
     mockEngine: ModelProxy.IEngine;
 
     constructor(mockEngine?: ModelProxy.IEngine) {
         super();
         this.mockEngine = mockEngine;
-    }
-
-    validate(instance: ModelProxy.IInterfaceModel, options: ModelProxy.IProxyCtx): boolean {
-        return true;
     }
 
     async proxy(instance: ModelProxy.IInterfaceModel, options: ModelProxy.IProxyCtx) {

@@ -1,14 +1,18 @@
 {
     "name": "modelproxy-engine-mockjs",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "description": "modelproxy的engine；用于产生mock数据。",
     "main": "dist/node.js",
     "scripts": {
         "test": "node test",
-        "build": "tsc "
+        "build": "grunt build "
     },
     "bugs": {
         "url": "https://github.com/nick121212/modelproxy-engine-mockjs/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nick121212/modelproxy-engine-mockjs.git"
     },
     "homepage": "https://github.com/nick121212/modelproxy-engine-mockjs#readme",
     "keywords": [
