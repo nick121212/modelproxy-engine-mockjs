@@ -1,5 +1,7 @@
 import * as Mock from "mockjs";
 import { modelProxy, ModelProxy } from 'modelproxy';
+import * as _ from "lodash";
+import * as serialize from "node-serialize";
 
 export class MockEngine extends modelProxy.BaseEngine implements ModelProxy.IEngine {
     mockEngine: ModelProxy.IEngine;
@@ -9,7 +11,7 @@ export class MockEngine extends modelProxy.BaseEngine implements ModelProxy.IEng
         this.mockEngine = mockEngine;
     }
 
-    validate(data: any): boolean {
+    validate(instance: ModelProxy.IInterfaceModel, options: ModelProxy.IProxyCtx): boolean {
         return true;
     }
 
@@ -17,14 +19,23 @@ export class MockEngine extends modelProxy.BaseEngine implements ModelProxy.IEng
         if (!this.mockEngine) {
             throw new Error("没有设置mock的默认引擎！");
         }
-        let mockInfo = await this.mockEngine.proxy(instance, options);
+
+        let mockInfo = await this.mockEngine.proxy(_.extend({}, instance, {
+            path: `${instance.mockDir}`,
+            method: "GET"
+        }), _.extend({}, options, {
+            settings: {
+                dataType: "json"
+            },
+            params: {
+                path: `${instance.ns}/${instance.key}`
+            }
+        }));
 
         return {
-            req: {
-                data: options.data,
-                params: options.params
-            },
-            mockData: Mock.mock(mockInfo)
+            options: options,
+            instance: instance,
+            mockData: Mock.mock(serialize.unserialize(serialize.unserialize(mockInfo)))
         };
     }
 }

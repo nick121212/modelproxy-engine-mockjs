@@ -22,7 +22,7 @@ var config = {
 };
 
 var modelProxy = require("modelproxy").modelProxy;
-var MockjsEngine = require("../dist").MockEngine;
+var MockjsEngine = require("../dist/node").MockEngine;
 var path = require("path");
 
 function NodeEngine() {}
