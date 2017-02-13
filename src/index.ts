@@ -13,7 +13,7 @@ export class MockEngine extends modelProxy.BaseEngine {
 
     async proxy(instance: ModelProxy.IInterfaceModel, options: ModelProxy.IProxyCtx) {
         if (!this.mockEngine) {
-            throw new Error("没有设置mock的默认引擎！");
+            throw new modelProxy.errors.ModelProxyMissingError("没有设置mock的默认引擎！");
         }
 
         let mockInfo = await this.mockEngine.proxy(_.extend({}, instance, {

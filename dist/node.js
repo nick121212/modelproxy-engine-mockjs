@@ -159,7 +159,7 @@ var MockEngine = (function (_super) {
                 switch (_a.label) {
                     case 0:
                         if (!this.mockEngine) {
-                            throw new Error("没有设置mock的默认引擎！");
+                            throw new modelproxy_1.modelProxy.errors.ModelProxyMissingError("没有设置mock的默认引擎！");
                         }
                         return [4 /*yield*/, this.mockEngine.proxy(_.extend({}, instance, {
                                 path: "" + instance.mockDir,
