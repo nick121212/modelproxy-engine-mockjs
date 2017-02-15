@@ -51,13 +51,6 @@ module.exports = {
             commonjs: ["lodash"],
             amd: "lodash"
         }
-    }, {
-        "node-serialize": {
-            root: "serialize",
-            commonjs2: "node-serialize",
-            commonjs: ["node-serialize"],
-            amd: "node-serialize"
-        }
     }],
     plugins: [
         new webpack.ProvidePlugin({

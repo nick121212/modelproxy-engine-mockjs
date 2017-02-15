@@ -1,6 +1,6 @@
 {
     "name": "modelproxy-engine-mockjs",
-    "version": "0.1.6",
+    "version": "0.2.1",
     "description": "modelproxy的engine；用于产生mock数据。",
     "main": "dist/node.js",
     "scripts": {
@@ -26,8 +26,7 @@
     "dependencies": {
         "lodash": "^4.17.4",
         "mockjs": "^1.0.1-beta3",
-        "modelproxy": "^0.3.0",
-        "node-serialize": "0.0.4"
+        "modelproxy": "^0.3.0"
     },
     "devDependencies": {
         "grunt": "^1.0.1",

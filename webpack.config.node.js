@@ -53,13 +53,6 @@ module.exports = {
             commonjs: ["lodash"],
             amd: "lodash"
         }
-    }, {
-        "node-serialize": {
-            root: "serialize",
-            commonjs2: "node-serialize",
-            commonjs: ["node-serialize"],
-            amd: "node-serialize"
-        }
     }],
     plugins: [
         // new webpack.IgnorePlugin(/tv4|lodash/i),

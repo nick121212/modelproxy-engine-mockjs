@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -86,12 +86,6 @@ module.exports = require("modelproxy");
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports) {
-
-module.exports = require("node-serialize");
-
-/***/ }),
-/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -144,41 +138,65 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var Mock = __webpack_require__(0);
 var modelproxy_1 = __webpack_require__(2);
 var _ = __webpack_require__(1);
-var serialize = __webpack_require__(3);
 var MockEngine = (function (_super) {
     __extends(MockEngine, _super);
     function MockEngine(mockEngine) {
         var _this = _super.call(this) || this;
         _this.mockEngine = mockEngine;
+        _this.init();
         return _this;
     }
-    MockEngine.prototype.proxy = function (instance, options) {
-        return __awaiter(this, void 0, void 0, function () {
+    MockEngine.prototype.validate = function (instance, options) {
+        if (!this.mockEngine) {
+            throw new modelproxy_1.modelProxy.errors.ModelProxyMissingError("没有设置mock的默认引擎！");
+        }
+        _super.prototype.validate.call(this, instance, options);
+        return true;
+    };
+    MockEngine.prototype.init = function () {
+        var _this = this;
+        this.use(function (ctx, next) { return __awaiter(_this, void 0, void 0, function () {
             var mockInfo;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        if (!this.mockEngine) {
-                            throw new modelproxy_1.modelProxy.errors.ModelProxyMissingError("没有设置mock的默认引擎！");
-                        }
-                        return [4 /*yield*/, this.mockEngine.proxy(_.extend({}, instance, {
-                                path: "" + instance.mockDir,
-                                method: "GET"
-                            }), _.extend({}, options, {
-                                settings: {
-                                    dataType: "json"
-                                },
-                                params: {
-                                    path: instance.ns + "/" + instance.key
-                                }
-                            }))];
+                    case 0: return [4 /*yield*/, this.mockEngine.proxy(_.extend({}, ctx.instance, {
+                            path: "" + ctx.instance.mockDir,
+                            method: "GET"
+                        }), _.extend({}, ctx.executeInfo, {
+                            settings: {
+                                dataType: "text"
+                            },
+                            params: {
+                                path: ctx.instance.ns + "/" + ctx.instance.key
+                            }
+                        }))];
                     case 1:
                         mockInfo = _a.sent();
-                        return [2 /*return*/, {
-                                options: options,
-                                instance: instance,
-                                mockData: Mock.mock(serialize.unserialize(serialize.unserialize(mockInfo)))
-                            }];
+                        ctx.result = mockInfo;
+                        return [4 /*yield*/, next()];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        }); });
+    };
+    MockEngine.prototype.proxy = function (instance, options) {
+        return __awaiter(this, void 0, void 0, function () {
+            var ctx, fn;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        ctx = {
+                            instance: instance,
+                            executeInfo: options
+                        }, fn = this.callback(function () {
+                            console.log("over");
+                        });
+                        return [4 /*yield*/, fn(ctx)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/, Mock.mock(ctx.result)];
                 }
             });
         });
