@@ -5,13 +5,22 @@ import * as _ from "lodash";
 export class MockEngine extends modelProxy.BaseEngine {
     mockEngine: ModelProxy.IEngine;
 
+    /**
+     * 构造
+     * @param mockEngine   {ModelProxy.IEngine}  用于获取mock数据的engine
+     */
     constructor(mockEngine?: ModelProxy.IEngine) {
         super();
         this.mockEngine = mockEngine;
-
         this.init();
     }
 
+    /**
+     * 验证数据准确性
+     * @param instance   {ModelProxy.IInterfaceModel}  接口实例
+     * @param options    {ModelProxy.IExecute}         执行的参数
+     * @return           {boolean}
+     */
     validate(instance: ModelProxy.IInterfaceModel, options: ModelProxy.IExecute): boolean {
         if (!this.mockEngine) {
             throw new modelProxy.errors.ModelProxyMissingError("没有设置mock的默认引擎！");
@@ -22,7 +31,11 @@ export class MockEngine extends modelProxy.BaseEngine {
         return true;
     }
 
+    /**
+     * 初始化中间件函数
+     */
     init(): void {
+        // 调用engine来请求数据
         this.use(async (ctx: ModelProxy.IProxyCtx, next) => {
             let mockInfo = await this.mockEngine.proxy(_.extend({}, ctx.instance, {
                 path: `${ctx.instance.mockDir}`,
@@ -42,7 +55,13 @@ export class MockEngine extends modelProxy.BaseEngine {
         });
     }
 
-    async proxy(instance: ModelProxy.IInterfaceModel, options: ModelProxy.IProxyCtx) {
+    /**
+     * 验证数据准确性
+     * @param instance   {ModelProxy.IInterfaceModel}  接口实例
+     * @param options    {ModelProxy.IExecute}         执行的参数
+     * @return           {Promise<any>}
+     */
+    async proxy(instance: ModelProxy.IInterfaceModel, options: ModelProxy.IProxyCtx): Promise<any> {
         let ctx: ModelProxy.IProxyCtx = {
             instance: instance,
             executeInfo: options
