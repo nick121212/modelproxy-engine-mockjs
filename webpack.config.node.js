@@ -18,7 +18,7 @@ module.exports = {
         filename: 'node.js',
         // hash: true,
         // library: "modelProxy",
-        libraryTarget: 'commonjs'
+        libraryTarget: 'commonjs-module'
     },
     stats: {
         colors: true,
@@ -45,13 +45,6 @@ module.exports = {
             commonjs2: "mockjs",
             commonjs: ["mockjs"],
             amd: "mockjs"
-        }
-    }, {
-        "lodash": {
-            root: "_",
-            commonjs2: "lodash",
-            commonjs: ["lodash"],
-            amd: "lodash"
         }
     }],
     plugins: [

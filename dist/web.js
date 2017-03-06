@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("mockjs"), require("lodash"), require("modelproxy"));
+		module.exports = factory(require("mockjs"), require("modelproxy"));
 	else if(typeof define === 'function' && define.amd)
-		define(["mockjs", "lodash", "modelproxy"], factory);
+		define(["mockjs", "modelproxy"], factory);
 	else {
-		var a = typeof exports === 'object' ? factory(require("mockjs"), require("lodash"), require("modelproxy")) : factory(root["Mock"], root["_"], root["modelProxy"]);
+		var a = typeof exports === 'object' ? factory(require("mockjs"), require("modelproxy")) : factory(root["Mock"], root["modelProxy"]);
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 	}
-})(this, function(__WEBPACK_EXTERNAL_MODULE_0__, __WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_2__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_0__, __WEBPACK_EXTERNAL_MODULE_1__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -90,12 +90,6 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -145,9 +139,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 var Mock = __webpack_require__(0);
-var modelproxy_1 = __webpack_require__(2);
-var _ = __webpack_require__(1);
+var modelproxy_1 = __webpack_require__(1);
 var MockEngine = (function (_super) {
     __extends(MockEngine, _super);
     function MockEngine(mockEngine) {
@@ -169,10 +163,10 @@ var MockEngine = (function (_super) {
             var mockInfo;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.mockEngine.proxy(_.extend({}, ctx.instance, {
+                    case 0: return [4 /*yield*/, this.mockEngine.proxy(Object.assign({}, ctx.instance, {
                             path: "" + ctx.instance.mockDir,
                             method: "GET"
-                        }), _.extend({}, ctx.executeInfo, {
+                        }), Object.assign({}, ctx.executeInfo, {
                             settings: {
                                 dataType: "text"
                             },
@@ -206,6 +200,7 @@ var MockEngine = (function (_super) {
                         return [4 /*yield*/, fn(ctx)];
                     case 1:
                         _a.sent();
+                        console.log(ctx);
                         return [2 /*return*/, Mock.mock(ctx.result)];
                 }
             });

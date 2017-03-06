@@ -1,4 +1,5 @@
-(function(e, a) { for(var i in a) e[i] = a[i]; }(exports, /******/ (function(modules) { // webpackBootstrap
+module.exports =
+/******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -63,29 +64,23 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports) {
 
-module.exports = require("mockjs");
+module.exports = undefined;
 
 /***/ }),
 /* 1 */
 /***/ (function(module, exports) {
 
-module.exports = require("lodash");
+module.exports = undefined;
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports) {
-
-module.exports = require("modelproxy");
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -135,9 +130,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 var Mock = __webpack_require__(0);
-var modelproxy_1 = __webpack_require__(2);
-var _ = __webpack_require__(1);
+var modelproxy_1 = __webpack_require__(1);
 var MockEngine = (function (_super) {
     __extends(MockEngine, _super);
     function MockEngine(mockEngine) {
@@ -159,10 +154,10 @@ var MockEngine = (function (_super) {
             var mockInfo;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.mockEngine.proxy(_.extend({}, ctx.instance, {
+                    case 0: return [4 /*yield*/, this.mockEngine.proxy(Object.assign({}, ctx.instance, {
                             path: "" + ctx.instance.mockDir,
                             method: "GET"
-                        }), _.extend({}, ctx.executeInfo, {
+                        }), Object.assign({}, ctx.executeInfo, {
                             settings: {
                                 dataType: "text"
                             },
@@ -196,6 +191,7 @@ var MockEngine = (function (_super) {
                         return [4 /*yield*/, fn(ctx)];
                     case 1:
                         _a.sent();
+                        console.log(ctx);
                         return [2 /*return*/, Mock.mock(ctx.result)];
                 }
             });
@@ -207,5 +203,5 @@ exports.MockEngine = MockEngine;
 
 
 /***/ })
-/******/ ])));
+/******/ ]);
 //# sourceMappingURL=node.js.map

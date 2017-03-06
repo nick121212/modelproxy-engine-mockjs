@@ -1,6 +1,5 @@
 import * as Mock from "mockjs";
 import { modelProxy, ModelProxy } from 'modelproxy';
-import * as _ from "lodash";
 
 export class MockEngine extends modelProxy.BaseEngine {
     mockEngine: ModelProxy.IEngine;
@@ -37,10 +36,10 @@ export class MockEngine extends modelProxy.BaseEngine {
     init(): void {
         // 调用engine来请求数据
         this.use(async (ctx: ModelProxy.IProxyCtx, next) => {
-            let mockInfo = await this.mockEngine.proxy(_.extend({}, ctx.instance, {
+            let mockInfo = await this.mockEngine.proxy(Object.assign({}, ctx.instance, {
                 path: `${ctx.instance.mockDir}`,
                 method: "GET"
-            }), _.extend({}, ctx.executeInfo, {
+            }), Object.assign({}, ctx.executeInfo, {
                 settings: {
                     dataType: "text"
                 },
@@ -70,6 +69,8 @@ export class MockEngine extends modelProxy.BaseEngine {
         });
 
         await fn(ctx);
+
+        console.log(ctx);
 
         return Mock.mock(ctx.result);
     }

@@ -12,12 +12,9 @@
         "noLib": false,
         "outDir": "dist",
         "lib": [
+            "dom",
             "es5",
             "es2016"
-        ],
-        "typeRoots": [
-            "typings/index.d.ts",
-            "node_modules/modelproxy/modelproxy.d.ts"
         ]
     }
 }

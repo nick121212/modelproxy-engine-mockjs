@@ -44,13 +44,6 @@ module.exports = {
             commonjs: ["mockjs"],
             amd: "mockjs"
         }
-    }, {
-        "lodash": {
-            root: "_",
-            commonjs2: "lodash",
-            commonjs: ["lodash"],
-            amd: "lodash"
-        }
     }],
     plugins: [
         new webpack.ProvidePlugin({
