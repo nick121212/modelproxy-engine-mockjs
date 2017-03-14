@@ -18,7 +18,7 @@ module.exports = {
         filename: 'node.js',
         // hash: true,
         // library: "modelProxy",
-        libraryTarget: 'commonjs-module'
+        libraryTarget: 'commonjs2'
     },
     stats: {
         colors: true,

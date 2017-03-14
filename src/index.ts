@@ -2,7 +2,7 @@ import * as Mock from "mockjs";
 import { modelProxy, ModelProxy } from 'modelproxy';
 
 export class MockEngine extends modelProxy.BaseEngine {
-    mockEngine: ModelProxy.IEngine;
+    private mockEngine: ModelProxy.IEngine;
 
     /**
      * 构造
@@ -33,7 +33,7 @@ export class MockEngine extends modelProxy.BaseEngine {
     /**
      * 初始化中间件函数
      */
-    init(): void {
+    private init(): void {
         // 调用engine来请求数据
         this.use(async (ctx: ModelProxy.IProxyCtx, next) => {
             let mockInfo = await this.mockEngine.proxy(Object.assign({}, ctx.instance, {
@@ -65,12 +65,10 @@ export class MockEngine extends modelProxy.BaseEngine {
             instance: instance,
             executeInfo: options
         }, fn = this.callback(() => {
-            console.log("over");
+            
         });
 
         await fn(ctx);
-
-        console.log(ctx);
 
         return Mock.mock(ctx.result);
     }
