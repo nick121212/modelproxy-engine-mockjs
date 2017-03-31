@@ -118,6 +118,9 @@ var MockEngine = (function (_super) {
                         return [4 /*yield*/, fn(ctx)];
                     case 1:
                         _a.sent();
+                        if (ctx.isError) {
+                            throw ctx.err;
+                        }
                         return [2 /*return*/, Mock.mock(ctx.result)];
                 }
             });

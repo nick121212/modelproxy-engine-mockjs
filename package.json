@@ -1,6 +1,6 @@
 {
     "name": "modelproxy-engine-mockjs",
-    "version": "0.2.8",
+    "version": "0.3.0",
     "description": "modelproxy的engine；用于产生mock数据。",
     "main": "libs/index.js",
     "types": "index.d.ts",
@@ -26,10 +26,11 @@
     "author": "nick",
     "license": "MIT",
     "dependencies": {
-        "mockjs": "^1.0.1-beta3",
-        "modelproxy": "^0.4.2"
+        "mockjs": "^1.0.1-beta3"
+
     },
     "devDependencies": {
+        "modelproxy": "^0.4.2",
         "ts-loader": "^2.0.0",
         "typescript": "^2.1.6",
         "webpack": "^2.2.1"

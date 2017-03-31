@@ -65,10 +65,14 @@ export class MockEngine extends modelProxy.BaseEngine {
             instance: instance,
             executeInfo: options
         }, fn = this.callback(() => {
-            
+
         });
 
         await fn(ctx);
+        
+        if (ctx.isError) {
+            throw ctx.err;
+        }
 
         return Mock.mock(ctx.result);
     }
