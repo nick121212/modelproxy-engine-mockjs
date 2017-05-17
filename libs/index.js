@@ -41,6 +41,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var Mock = require("mockjs");
 var modelproxy_1 = require("modelproxy");
+// import { IProxyCtx } from "../../modelproxy/libs/models/proxy.ctx";
 var MockEngine = (function (_super) {
     __extends(MockEngine, _super);
     /**
@@ -97,6 +98,19 @@ var MockEngine = (function (_super) {
                 }
             });
         }); });
+        // 调用mock
+        this.use(function (ctx, next) { return __awaiter(_this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        ctx.result = Mock.mock(ctx.result);
+                        return [4 /*yield*/, next()];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        }); });
     };
     /**
      * 验证数据准确性
@@ -121,7 +135,7 @@ var MockEngine = (function (_super) {
                         if (ctx.isError) {
                             throw ctx.err;
                         }
-                        return [2 /*return*/, Mock.mock(ctx.result)];
+                        return [2 /*return*/, ctx.result];
                 }
             });
         });

@@ -1,14 +1,16 @@
+
 import * as Mock from "mockjs";
-import { modelProxy, ModelProxy } from 'modelproxy';
+import { modelProxy, IInterfaceModel, IExecute, IEngine, IProxyCtx } from 'modelproxy';
+// import { IProxyCtx } from "../../modelproxy/libs/models/proxy.ctx";
 
 export class MockEngine extends modelProxy.BaseEngine {
-    private mockEngine: ModelProxy.IEngine;
+    private mockEngine: IEngine;
 
     /**
      * 构造
      * @param mockEngine   {ModelProxy.IEngine}  用于获取mock数据的engine
      */
-    constructor(mockEngine?: ModelProxy.IEngine) {
+    constructor(mockEngine?: IEngine) {
         super();
         this.mockEngine = mockEngine;
         this.init();
@@ -20,7 +22,7 @@ export class MockEngine extends modelProxy.BaseEngine {
      * @param options    {ModelProxy.IExecute}         执行的参数
      * @return           {boolean}
      */
-    validate(instance: ModelProxy.IInterfaceModel, options: ModelProxy.IExecute): boolean {
+    validate(instance: IInterfaceModel, options: IExecute): boolean {
         if (!this.mockEngine) {
             throw new modelProxy.errors.ModelProxyMissingError("没有设置mock的默认引擎！");
         }
@@ -35,7 +37,7 @@ export class MockEngine extends modelProxy.BaseEngine {
      */
     private init(): void {
         // 调用engine来请求数据
-        this.use(async (ctx: ModelProxy.IProxyCtx, next) => {
+        this.use(async (ctx: IProxyCtx, next) => {
             let mockInfo = await this.mockEngine.proxy(Object.assign({}, ctx.instance, {
                 path: `${ctx.instance.mockDir}`,
                 method: "GET"
@@ -52,6 +54,14 @@ export class MockEngine extends modelProxy.BaseEngine {
 
             await next();
         });
+
+        // 调用mock
+        this.use(async (ctx: IProxyCtx, next) => {
+            ctx.result = Mock.mock(ctx.result);
+
+            await next();
+        });
+
     }
 
     /**
@@ -60,8 +70,8 @@ export class MockEngine extends modelProxy.BaseEngine {
      * @param options    {ModelProxy.IExecute}         执行的参数
      * @return           {Promise<any>}
      */
-    async proxy(instance: ModelProxy.IInterfaceModel, options: ModelProxy.IProxyCtx): Promise<any> {
-        let ctx: ModelProxy.IProxyCtx = {
+    async proxy(instance: IInterfaceModel, options: IProxyCtx): Promise<any> {
+        let ctx: IProxyCtx = {
             instance: instance,
             executeInfo: options
         }, fn = this.callback(() => {
@@ -69,11 +79,11 @@ export class MockEngine extends modelProxy.BaseEngine {
         });
 
         await fn(ctx);
-        
+
         if (ctx.isError) {
             throw ctx.err;
         }
 
-        return Mock.mock(ctx.result);
+        return ctx.result;
     }
 }
